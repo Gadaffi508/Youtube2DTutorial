@@ -4,6 +4,7 @@ using UnityEngine;
 public class CharecterController : MonoBehaviour
 {
     Rigidbody2D rb;
+    Animator anim;
     float horizontal;
     bool jump = true;
     public bool Facing;
@@ -21,6 +22,7 @@ public class CharecterController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -48,6 +50,17 @@ public class CharecterController : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            anim.SetBool("click",true);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            anim.SetBool("click", false);
+        }
+
     }
 
     private void FixedUpdate()

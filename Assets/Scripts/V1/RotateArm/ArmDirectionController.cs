@@ -57,14 +57,14 @@ public class ArmDirectionController : MonoBehaviour
     {
         GameObject bullet = Instantiate(Bullet, BulletRotation.position,Quaternion.identity);
 
-        if (GetComponentInParent<CharecterController>().Facing == false)
+        /*if (GetComponentInParent<CharecterController>().Facing == false)
         {
             bullet.GetComponent<ProjectTile>().facingValue = 1;
         }
         else
         {
             bullet.GetComponent<ProjectTile>().facingValue = -1;
-        }
+        }*/
     }
 
     public void Facing(Transform enemy)
@@ -75,7 +75,7 @@ public class ArmDirectionController : MonoBehaviour
 
         rotateFire.rotation = Quaternion.Euler(0f,0f,targetAngel);
 
-        if (GetComponentInParent<CharecterController>().Facing == false)
+        /*if (GetComponentInParent<CharecterController>().Facing == false)
         {
             transform.localScale = new Vector2(1f,1f);
             Gun.transform.localScale = new Vector2(1f,1f);
@@ -84,7 +84,7 @@ public class ArmDirectionController : MonoBehaviour
         {
             transform.localScale = new Vector2(-1f, 1f);
             Gun.transform.localScale = new Vector2(1f, -1f);
-        }
+        }*/
     }
 
     private void OnDrawGizmos()

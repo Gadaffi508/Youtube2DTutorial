@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CharecterController : MonoBehaviour
@@ -7,17 +8,13 @@ public class CharecterController : MonoBehaviour
     Animator anim;
     float horizontal;
     bool jump = true;
-    public bool Facing;
     [SerializeField] private float speed = 4;
     [SerializeField] private float JumpForce = 200;
 
     [Space]
-    [Header("Dash property")]
-    [SerializeField] private float dashSpeed = 25;
-    [Range(0, 1)]
-    [SerializeField] private float dashDuration = 0.2f;
-    private bool isDashing = false;
-    [SerializeField] private GameObject particleDash;
+    [Header("Sword Options")]
+    [SerializeField] private Transform m_radiusPos;
+    [SerializeField] private float m_radiusValue;
 
     private void Start()
     {
@@ -29,36 +26,28 @@ public class CharecterController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
 
+        anim.SetFloat("speed", Mathf.Abs(horizontal));
+
         if (Input.GetKeyDown(KeyCode.Space) && jump == true)
         {
             rb.AddForce(new Vector3(0, transform.position.y + JumpForce, 0), ForceMode2D.Force);
+            anim.SetBool("jump", true);
             jump = false;
         }
 
         if (horizontal > 0)
         {
-            transform.localScale = new Vector2(1, 1);
-            Facing = false;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (horizontal < 0)
         {
-            transform.localScale = new Vector2(-1, 1);
-            Facing = true;
+            transform.localScale = new Vector3(1, 1, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && !isDashing)
-        {
-            StartCoroutine(Dash());
-        }
 
         if (Input.GetMouseButtonDown(0))
         {
-            anim.SetBool("click",true);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            anim.SetBool("click", false);
+            anim.SetTrigger("Attack");
         }
 
     }
@@ -70,27 +59,29 @@ public class CharecterController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             jump = true;
+            anim.SetBool("jump", false);
         }
     }
 
-    IEnumerator Dash()
+    private void OnDrawGizmos()
     {
-        isDashing = true;
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(m_radiusPos.position, m_radiusValue);
+    }
 
-        Vector2 oldVelocity = rb.velocity;
+    public void Attack()
+    {
+        Collider2D[] collision = Physics2D.OverlapCircleAll(m_radiusPos.position, m_radiusValue);
 
-        GameObject particle = Instantiate(particleDash,transform.position,Quaternion.identity);
-        Destroy(particle,2f);
-
-        rb.velocity = new Vector2(dashSpeed * transform.localScale.x, rb.velocity.y);
-
-        yield return new WaitForSeconds(dashDuration);
-
-        rb.velocity = oldVelocity;
-
-        isDashing = false;
+        foreach (Collider2D collider in collision)
+        {
+            if (collider.name == "Box")
+            {
+                collider.GetComponent<BoxManager>().ObjectActiveManager();
+            }
+        }
     }
 }

@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class BoxManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] boxes;
-    public int objeValue;
     [SerializeField] private GameObject deadParticle;
+    [SerializeField] private GameObject[] boxes;
+    public int boxValue;
 
-    public void ObjectActiveManager()
+    public void BoxDamage()
     {
-        objeValue++;
-        boxes[objeValue].SetActive(true);
-        boxes[objeValue - 1].SetActive(false);
-
-        if (objeValue == 3)
+        if (boxValue == 3)
         {
-            Instantiate(deadParticle, transform.position, Quaternion.identity);
+            GameObject particle = Instantiate(deadParticle, transform.position, Quaternion.identity);
+            Destroy(particle, 2f);
             Destroy(gameObject);
         }
+        else
+        {
+            boxValue++;
+        }
+
+        boxes[boxValue].SetActive(true);
+        boxes[boxValue - 1].SetActive(false);
     }
 }

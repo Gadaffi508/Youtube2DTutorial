@@ -12,9 +12,9 @@ public class CharecterController : MonoBehaviour
     [SerializeField] private float JumpForce = 200;
 
     [Space]
-    [Header("Sword Options")]
-    [SerializeField] private Transform m_radiusPos;
-    [SerializeField] private float m_radiusValue;
+    [Header("Sword Controller")]
+    [SerializeField] private Transform radiusPos;
+    [SerializeField] private float radiusValue;
 
     private void Start()
     {
@@ -69,18 +69,18 @@ public class CharecterController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(m_radiusPos.position, m_radiusValue);
+        Gizmos.DrawWireSphere(radiusPos.position, radiusValue);
     }
 
     public void Attack()
     {
-        Collider2D[] collision = Physics2D.OverlapCircleAll(m_radiusPos.position, m_radiusValue);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(radiusPos.position, radiusValue);
 
-        foreach (Collider2D collider in collision)
+        foreach (Collider2D collision in colliders)
         {
-            if (collider.name == "Box")
+            if (collision.name == "Box")
             {
-                collider.GetComponent<BoxManager>().ObjectActiveManager();
+                collision.GetComponent<BoxManager>().BoxDamage();
             }
         }
     }

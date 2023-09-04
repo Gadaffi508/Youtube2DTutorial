@@ -11,11 +11,6 @@ public class CharecterController : MonoBehaviour
     [SerializeField] private float speed = 4;
     [SerializeField] private float JumpForce = 200;
 
-    [Space]
-    [Header("Sword Controller")]
-    [SerializeField] private Transform radiusPos;
-    [SerializeField] private float radiusValue;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -44,12 +39,6 @@ public class CharecterController : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
 
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            anim.SetTrigger("Attack");
-        }
-
     }
 
     private void FixedUpdate()
@@ -63,25 +52,6 @@ public class CharecterController : MonoBehaviour
         {
             jump = true;
             anim.SetBool("jump", false);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(radiusPos.position, radiusValue);
-    }
-
-    public void Attack()
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(radiusPos.position, radiusValue);
-
-        foreach (Collider2D collision in colliders)
-        {
-            if (collision.name == "Box")
-            {
-                collision.GetComponent<BoxManager>().BoxDamage();
-            }
         }
     }
 }

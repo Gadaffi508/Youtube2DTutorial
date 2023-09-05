@@ -32,11 +32,11 @@ public class CharecterController : MonoBehaviour
 
         if (horizontal > 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(.5f, .5f, 1);
         }
         else if (horizontal < 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(-.5f, .5f, 1);
         }
 
     }

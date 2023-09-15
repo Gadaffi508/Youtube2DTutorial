@@ -11,6 +11,9 @@ public class CharecterController : MonoBehaviour
     [SerializeField] private float speed = 4;
     [SerializeField] private float JumpForce = 200;
 
+    [SerializeField] private GameObject projectTile;
+    [SerializeField] private Transform attackPos;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,14 +33,10 @@ public class CharecterController : MonoBehaviour
             jump = false;
         }
 
-        if (horizontal > 0)
-        {
-            transform.localScale = new Vector3(.5f, .5f, 1);
-        }
-        else if (horizontal < 0)
-        {
-            transform.localScale = new Vector3(-.5f, .5f, 1);
-        }
+        if (horizontal > 0) transform.localScale = new Vector3(.6f, .6f, 1);
+        else if (horizontal < 0) transform.localScale = new Vector3(-.6f, .6f, 1);
+
+        if (Input.GetMouseButtonDown(0)) anim.SetTrigger("attack");
 
     }
 
@@ -53,5 +52,11 @@ public class CharecterController : MonoBehaviour
             jump = true;
             anim.SetBool("jump", false);
         }
+    }
+
+    public void Shoot()
+    {
+        GameObject bullet = Instantiate(projectTile, attackPos.position,Quaternion.identity);
+        Destroy(bullet,2f);
     }
 }

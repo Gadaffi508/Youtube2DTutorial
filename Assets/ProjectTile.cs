@@ -7,11 +7,13 @@ public class ProjectTile : MonoBehaviour
     public float speed;
     public CharecterController target;
     Vector3 _mousePos;
+    public GameObject fire;
+    public AnimationCurve curve;
+    public float duration = 1;
+    public float heightY = 3;
 
     private void Start()
     {
-        Destroy(gameObject, 3f);
-
         target = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<CharecterController>();
 
         _mousePos = target.mousePos;
@@ -19,10 +21,27 @@ public class ProjectTile : MonoBehaviour
 
     private void Update()
     {
-        Vector3 direction = (_mousePos - transform.position).normalized;
+        StartCoroutine(Curve(transform.position,_mousePos));
+    }
 
-        Vector3 movePos = transform.position + direction * speed * Time.deltaTime;
+    public IEnumerator Curve(Vector3 start, Vector2 targetP)
+    {
+        float timePassed = 0;
+        Vector2 end = targetP;
+        while (timePassed < duration)
+        {
+            timePassed += Time.deltaTime;
+            float linearT = timePassed / duration;
+            float heightT = curve.Evaluate(linearT);
 
-        transform.position = movePos;
+            float height = Mathf.Lerp(0f, heightY, heightT);
+
+            transform.position = Vector2.Lerp(start, end, linearT) + new Vector2(0f, height);
+
+            yield return null;
+        }
+        GameObject Obj = Instantiate(fire,transform.position,Quaternion.identity);
+        Destroy(Obj,5f);
+        Destroy(gameObject);
     }
 }

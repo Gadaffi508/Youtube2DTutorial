@@ -14,14 +14,12 @@ public class CharecterController : MonoBehaviour
     [SerializeField] private GameObject projectTile;
     [SerializeField] private Transform attackPos;
 
-    private int bulletFace;
-    private Vector3 mousePos;
+    public Vector3 mousePos;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        bulletFace = 1;
     }
 
     private void Update()
@@ -42,10 +40,10 @@ public class CharecterController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
             anim.SetTrigger("attack");
         }
-
     }
 
     private void FixedUpdate()
@@ -64,8 +62,7 @@ public class CharecterController : MonoBehaviour
 
     public void Shoot()
     {
-        GameObject bullet = Instantiate(projectTile, attackPos.position, Quaternion.identity);
-        bullet.GetComponent<ProjectTile>().target.position = mousePos;
-        Destroy(bullet, 2f);
+        Instantiate(projectTile, attackPos.position, Quaternion.identity);
+
     }
 }

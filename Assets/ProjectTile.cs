@@ -5,15 +5,22 @@ using UnityEngine;
 public class ProjectTile : MonoBehaviour
 {
     public float speed;
-    public float facingValue;
+    public Transform target;
 
     private void Start()
     {
-         Destroy(gameObject,3f);
+        Destroy(gameObject, 3f);
     }
 
     private void Update()
     {
-        transform.Translate(speed * Time.deltaTime * facingValue,0,0);
+        if (target != null)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+
+            Vector3 movePos = transform.position + direction * speed * Time.deltaTime;
+
+            transform.position = movePos;
+        }
     }
 }

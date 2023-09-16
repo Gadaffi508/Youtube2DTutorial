@@ -14,10 +14,14 @@ public class CharecterController : MonoBehaviour
     [SerializeField] private GameObject projectTile;
     [SerializeField] private Transform attackPos;
 
+    private int bulletFace;
+    private Vector3 mousePos;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        bulletFace = 1;
     }
 
     private void Update()
@@ -36,7 +40,11 @@ public class CharecterController : MonoBehaviour
         if (horizontal > 0) transform.localScale = new Vector3(.6f, .6f, 1);
         else if (horizontal < 0) transform.localScale = new Vector3(-.6f, .6f, 1);
 
-        if (Input.GetMouseButtonDown(0)) anim.SetTrigger("attack");
+        if (Input.GetMouseButtonDown(0))
+        {
+            mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            anim.SetTrigger("attack");
+        }
 
     }
 
@@ -56,7 +64,8 @@ public class CharecterController : MonoBehaviour
 
     public void Shoot()
     {
-        GameObject bullet = Instantiate(projectTile, attackPos.position,Quaternion.identity);
-        Destroy(bullet,2f);
+        GameObject bullet = Instantiate(projectTile, attackPos.position, Quaternion.identity);
+        bullet.GetComponent<ProjectTile>().target.position = mousePos;
+        Destroy(bullet, 2f);
     }
 }

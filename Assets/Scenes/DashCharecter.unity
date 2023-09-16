@@ -1264,6 +1264,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -2888759972122988496, guid: 389d2366e1db64147aa81dd92ed3e4dd, type: 3}
   m_PrefabInstance: {fileID: 2053518113621352741}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2053518113621352743 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6881523506956232690, guid: 389d2366e1db64147aa81dd92ed3e4dd, type: 3}
+  m_PrefabInstance: {fileID: 2053518113621352741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &2053518114316514653
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1376,7 +1381,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053518115026235645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.146185, y: -3.0321848, z: 0}
+  m_LocalPosition: {x: -6.146185, y: -3.18, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1400,7 +1405,7 @@ GameObject:
   - component: {fileID: 2053518115026235647}
   m_Layer: 0
   m_Name: CollegeStudent
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1419,6 +1424,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   JumpForce: 200
+  projectTile: {fileID: 8282875715830357354, guid: b161740903669684d8aa703a85752887, type: 3}
+  attackPos: {fileID: 2053518113621352743}
 --- !u!50 &2053518115026235647
 Rigidbody2D:
   serializedVersion: 4
@@ -1439,7 +1446,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &2053518115026235648
 BoxCollider2D:
   m_ObjectHideFlags: 0

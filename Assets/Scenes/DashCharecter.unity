@@ -1426,6 +1426,7 @@ MonoBehaviour:
   JumpForce: 200
   projectTile: {fileID: 8282875715830357354, guid: b161740903669684d8aa703a85752887, type: 3}
   attackPos: {fileID: 2053518113621352743}
+  mousePos: {x: 0, y: 0, z: 0}
 --- !u!50 &2053518115026235647
 Rigidbody2D:
   serializedVersion: 4

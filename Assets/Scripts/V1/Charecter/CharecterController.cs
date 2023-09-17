@@ -60,7 +60,6 @@ public class CharecterController : MonoBehaviour
 
     public void Shoot()
     {
-        Instantiate(projectTile, attackPos.position, Quaternion.identity);
-
+        Instantiate(projectTile,attackPos.position,Quaternion.identity);
     }
 }

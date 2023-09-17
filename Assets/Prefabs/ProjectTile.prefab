@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8282875715830357270}
   - component: {fileID: 8282875715830357271}
   - component: {fileID: 8282875715830357268}
-  - component: {fileID: 8282875715830357269}
+  - component: {fileID: -7612390498507898148}
   m_Layer: 0
   m_Name: ProjectTile
   m_TagString: Untagged
@@ -124,7 +124,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8282875715830357269
+--- !u!114 &-7612390498507898148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,11 +133,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8282875715830357354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 092aa7addc87a774fb5a943ecde3299a, type: 3}
+  m_Script: {fileID: 11500000, guid: a39ec5e38c91524489c6efe069b7e85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 12
-  target: {fileID: 0}
+  player: {fileID: 0}
   fire: {fileID: 1206498299807332555, guid: af6c1e3f046eecd4d81330aeb285600f, type: 3}
   curve:
     serializedVersion: 2
@@ -149,7 +149,7 @@ MonoBehaviour:
       outSlope: 2
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.5

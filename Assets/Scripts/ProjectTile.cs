@@ -18,7 +18,7 @@ public class ProjectTile : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<CharecterController>();
 
-        _mousePos = player.mousePos;
+        //_mousePos = player.mousePos;
     }
 
     public IEnumerator Curve(Vector3 start, Vector2 target)

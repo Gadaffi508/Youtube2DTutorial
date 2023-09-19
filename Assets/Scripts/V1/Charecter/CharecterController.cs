@@ -12,8 +12,6 @@ public class CharecterController : MonoBehaviour
     [SerializeField] private GameObject projectTile;
     [SerializeField] private Transform attackPos;
 
-    public Vector3 mousePos;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -33,13 +31,11 @@ public class CharecterController : MonoBehaviour
             jump = false;
         }
 
-        if (horizontal > 0) transform.localScale = new Vector3(.6f, .6f, 1);
-        else if (horizontal < 0) transform.localScale = new Vector3(-.6f, .6f, 1);
+        if (horizontal > 0) transform.localScale = new Vector3(1f, 1f, 1);
+        else if (horizontal < 0) transform.localScale = new Vector3(-1f, 1f, 1);
 
         if (Input.GetMouseButtonDown(0))
         {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
             anim.SetTrigger("attack");
         }
     }

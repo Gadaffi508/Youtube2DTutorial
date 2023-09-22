@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharecterController : MonoBehaviour
@@ -5,15 +6,18 @@ public class CharecterController : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     float horizontal,Vertical;
-    [SerializeField] private float speed = 4;
     [SerializeField] private float JumpForce = 200;
     [SerializeField] private int XP;
-
+    [SerializeField] private GameObject UpgradePanel;
+    [Header("Upgrade")]
+    [SerializeField] private int Health = 100;
+    [SerializeField] private int speed = 4;
+    [SerializeField] private int Damage;
+    [Space]
     [Header("Attack")]
     [SerializeField] private float ARadius;
     [SerializeField] private Transform APos;
     [SerializeField] private LayerMask ELayer;
-    [SerializeField] private int Damage;
 
     private void Start()
     {
@@ -34,6 +38,11 @@ public class CharecterController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             anim.SetTrigger("Attack");
+        }
+
+        if (XP % 10 == 0 && XP != 0)
+        {
+            StartCoroutine(DelayUpgrade());
         }
     }
 
@@ -57,4 +66,31 @@ public class CharecterController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(APos.position,ARadius);
     }
+
+    public void Upgrade(string property)
+    {
+        Time.timeScale = 1;
+        switch (property)
+        {
+            case "speed":
+                speed += 1;
+                break;
+            case "health":
+                Health += 20;
+                break;
+            case "strong":
+                Damage += 10;
+                break;
+        }
+    }
+
+    IEnumerator DelayUpgrade()
+    {
+        XP = 0;
+        yield return new WaitForSeconds(.7f);
+        UpgradePanel.gameObject.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+
 }

@@ -1,9 +1,9 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 
 public class CharecterController : MonoBehaviour
 {
-    Rigidbody2D rb;
     Animator anim;
     float horizontal,Vertical;
     [SerializeField] private float JumpForce = 200;
@@ -17,12 +17,15 @@ public class CharecterController : MonoBehaviour
     [Header("Attack")]
     [SerializeField] private float ARadius;
     [SerializeField] private Transform APos;
-    [SerializeField] private LayerMask ELayer;
+    [SerializeField] private LayerMask ALayer;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        //SaveData();
+
         anim = GetComponent<Animator>();
+
+        //LoadData();
     }
 
     private void Update()
@@ -42,7 +45,7 @@ public class CharecterController : MonoBehaviour
 
         if (XP % 10 == 0 && XP != 0)
         {
-            StartCoroutine(DelayUpgrade());
+            StartCoroutine(UpgradeD());
         }
     }
 
@@ -53,7 +56,7 @@ public class CharecterController : MonoBehaviour
 
     public void Shoot()
     {
-        Collider2D[] enemyC = Physics2D.OverlapCircleAll(APos.position,ARadius, ELayer,float.MinValue,float.MaxValue);
+        Collider2D[] enemyC = Physics2D.OverlapCircleAll(APos.position,ARadius, ALayer);
         foreach (var enemy in enemyC)
         {
             enemy.GetComponent<EnemyC>().TakeDamage(Damage);
@@ -67,28 +70,50 @@ public class CharecterController : MonoBehaviour
         Gizmos.DrawWireSphere(APos.position,ARadius);
     }
 
-    public void Upgrade(string property)
+    public void SaveData()
+    {
+        CharecterData data = new CharecterData();
+        data.Health = Health;
+        data.speed = speed;
+        data.damage = Damage;
+
+        string json = JsonUtility.ToJson(data,true);
+        File.WriteAllText(Application.dataPath + "/CharecterDataFile.json",json);
+    }
+
+    public void LoadData()
+    {
+        string json = File.ReadAllText(Application.dataPath + "/CharecterDataFile.json");
+        CharecterData data = JsonUtility.FromJson<CharecterData>(json);
+
+        Health = data.Health;
+        speed = data.speed;
+        Damage = data.damage;
+    }
+
+    public void Upgrade(string UpgradeLevel)
     {
         Time.timeScale = 1;
-        switch (property)
+
+        switch (UpgradeLevel)
         {
             case "speed":
                 speed += 1;
                 break;
             case "health":
-                Health += 20;
+                Health += 10;
                 break;
-            case "strong":
-                Damage += 10;
+            case "damage":
+                Damage += 5;
                 break;
         }
     }
 
-    IEnumerator DelayUpgrade()
+    IEnumerator UpgradeD()
     {
         XP = 0;
         yield return new WaitForSeconds(.7f);
-        UpgradePanel.gameObject.SetActive(true);
+        UpgradePanel.SetActive(true);
         Time.timeScale = 0;
     }
 

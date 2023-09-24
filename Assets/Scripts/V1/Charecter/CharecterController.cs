@@ -1,6 +1,7 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharecterController : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class CharecterController : MonoBehaviour
     [SerializeField] private int XP;
     [SerializeField] private GameObject UpgradePanel;
     [Header("Upgrade")]
-    [SerializeField] private int Health = 100;
-    [SerializeField] private int speed = 4;
+    [SerializeField] private int Health;
+    [SerializeField] private int speed;
     [SerializeField] private int Damage;
     [Space]
     [Header("Attack")]
@@ -21,11 +22,18 @@ public class CharecterController : MonoBehaviour
 
     private void Start()
     {
-        //SaveData();
-
         anim = GetComponent<Animator>();
 
-        //LoadData();
+        string filePath = Application.dataPath + "/CharecterDataFile.json";
+
+        if (File.Exists(filePath))
+        {
+            LoadData();
+        }
+        else
+        {
+            SaveData();
+        }
     }
 
     private void Update()
@@ -75,7 +83,7 @@ public class CharecterController : MonoBehaviour
         CharecterData data = new CharecterData();
         data.Health = Health;
         data.speed = speed;
-        data.damage = Damage;
+        data.Damage = Damage;
 
         string json = JsonUtility.ToJson(data,true);
         File.WriteAllText(Application.dataPath + "/CharecterDataFile.json",json);
@@ -87,8 +95,8 @@ public class CharecterController : MonoBehaviour
         CharecterData data = JsonUtility.FromJson<CharecterData>(json);
 
         Health = data.Health;
+        Damage = data.Damage;
         speed = data.speed;
-        Damage = data.damage;
     }
 
     public void Upgrade(string UpgradeLevel)
@@ -107,6 +115,9 @@ public class CharecterController : MonoBehaviour
                 Damage += 5;
                 break;
         }
+
+        SaveData();
+
     }
 
     IEnumerator UpgradeD()
@@ -115,6 +126,14 @@ public class CharecterController : MonoBehaviour
         yield return new WaitForSeconds(.7f);
         UpgradePanel.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "NextScene")
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
 

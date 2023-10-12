@@ -10,7 +10,7 @@ public class Camerafwd : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 offset = new Vector3(Player.position.x,Player.position.y + 3,-10);
+        Vector3 offset = new Vector3(Player.position.x,Player.position.y,-10);
         transform.position = Vector3.Lerp(transform.position, offset, speed);
     }
 }

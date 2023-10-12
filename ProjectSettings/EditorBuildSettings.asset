@@ -8,7 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DashCharecter.unity
     guid: 292c7d83778425240871d440d7f0393a
-  - enabled: 1
-    path: Assets/Scenes/DataJsonScene.unity
-    guid: 5f73e9876d6a54142b1b1371925b5e76
   m_configObjects: {}

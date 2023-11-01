@@ -7,6 +7,26 @@ public class CardSystem : MonoBehaviour
     public List<GameObject> cardsHomeWork = new List<GameObject>();
     public List<GameObject> cardsGamePlay = new List<GameObject>();
 
+    [Header("Transform")] [Space] public Vector3 position;
+    public Vector3 rotation;
+    public Vector3 scale;
+    
+    [Header("Score")]
+    [Space]
+    public int _score;
+    private int Score
+    {
+        get
+        {
+            return _score;
+        }
+        set
+        {
+            _score = value;
+        }
+    }
+
+    
     int random;
 
     private void Start()
@@ -34,6 +54,9 @@ public class CardSystem : MonoBehaviour
 
         Debug.Log(random);
         Debug.Log(GetRandom());
+
+        Score++;
+        Debug.Log(Score);
     }
 
     public void ListActiveFalse(List<GameObject> cards)

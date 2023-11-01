@@ -14,6 +14,7 @@ public class Bomb : MonoBehaviour
     {
         if(mainCamera == null) mainCamera = Camera.main;
         Debug.Log("Merhaba");
+        Debug.Log("JetBrains added");
     }
 
     private void Shake(float _insensity,float _duration)

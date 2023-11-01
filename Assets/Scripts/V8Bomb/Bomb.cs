@@ -13,6 +13,7 @@ public class Bomb : MonoBehaviour
     private void Awake()
     {
         if(mainCamera == null) mainCamera = Camera.main;
+        Debug.Log("Merhaba");
     }
 
     private void Shake(float _insensity,float _duration)
